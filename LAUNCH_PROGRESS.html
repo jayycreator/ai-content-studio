@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Lumen Create — Launch Progress</title>
+    <style>
+      :root {
+        --paper: #f6f4ef;
+        --paper-2: #efeae1;
+        --ink: #1a1723;
+        --muted: #5e5869;
+        --line: #e3ddd2;
+        --accent: #6a2c91;
+        --accent-soft: #efe4f4;
+        --track: #e3ddd2;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --paper: #141118;
+          --paper-2: #1e1a25;
+          --ink: #f4f0ea;
+          --muted: #a79fb0;
+          --line: #2f2839;
+          --accent: #a878d0;
+          --accent-soft: #2a2036;
+          --track: #2f2839;
+        }
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        background: var(--paper);
+        color: var(--ink);
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        line-height: 1.55;
+        -webkit-font-smoothing: antialiased;
+      }
+      .wrap { max-width: 780px; margin: 0 auto; padding: 40px 20px 80px; }
+      header { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+      .logo {
+        width: 34px; height: 34px; border-radius: 8px; background: var(--accent);
+        color: #fff; font-weight: 700; display: grid; place-items: center; font-size: 17px;
+      }
+      h1 { font-size: 22px; margin: 0; letter-spacing: -0.02em; }
+      .sub { color: var(--muted); font-size: 14px; margin: 2px 0 0; }
+
+      .hero {
+        display: flex; align-items: center; gap: 28px; flex-wrap: wrap;
+        background: var(--paper-2); border: 1px solid var(--line);
+        border-radius: 20px; padding: 26px; margin: 26px 0 34px;
+      }
+      .ring { position: relative; width: 148px; height: 148px; flex: 0 0 auto; }
+      .ring svg { transform: rotate(-90deg); }
+      .ring .center {
+        position: absolute; inset: 0; display: flex; flex-direction: column;
+        align-items: center; justify-content: center; text-align: center;
+      }
+      .ring .pct { font-size: 30px; font-weight: 700; letter-spacing: -0.02em; }
+      .ring .frac { font-size: 12px; color: var(--muted); margin-top: 2px; }
+      .hero-copy { min-width: 200px; flex: 1; }
+      .hero-copy h2 { margin: 0 0 6px; font-size: 17px; letter-spacing: -0.01em; }
+      .hero-copy p { margin: 0; color: var(--muted); font-size: 14px; }
+      .nownext {
+        margin-top: 14px; font-size: 13px; color: var(--ink);
+        background: var(--accent-soft); border: 1px solid var(--line);
+        border-radius: 10px; padding: 10px 12px;
+      }
+      .nownext b { color: var(--accent); }
+
+      .phase { margin-top: 30px; }
+      .phase-head {
+        display: flex; align-items: baseline; justify-content: space-between;
+        gap: 10px; margin-bottom: 10px;
+      }
+      .phase-head h3 { margin: 0; font-size: 15px; letter-spacing: 0.02em; text-transform: uppercase; }
+      .phase-head .count { font-size: 12px; color: var(--muted); }
+      ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+      li {
+        display: flex; align-items: flex-start; gap: 12px;
+        background: var(--paper-2); border: 1px solid var(--line);
+        border-radius: 12px; padding: 12px 14px; cursor: pointer;
+        transition: border-color .15s ease, transform .1s ease;
+      }
+      li:hover { border-color: color-mix(in oklab, var(--accent) 40%, var(--line)); }
+      li:active { transform: scale(.995); }
+      .box {
+        width: 20px; height: 20px; border-radius: 6px; flex: 0 0 auto; margin-top: 1px;
+        border: 2px solid var(--track); display: grid; place-items: center;
+        transition: background .15s ease, border-color .15s ease;
+      }
+      li.done .box { background: var(--accent); border-color: var(--accent); }
+      .box svg { width: 12px; height: 12px; display: none; }
+      li.done .box svg { display: block; }
+      .label { font-size: 14.5px; }
+      li.done .label { color: var(--muted); text-decoration: line-through; }
+      .foot { margin-top: 40px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+      button {
+        font: inherit; font-size: 13px; padding: 8px 14px; border-radius: 9px;
+        border: 1px solid var(--line); background: var(--paper-2); color: var(--ink); cursor: pointer;
+      }
+      button:hover { border-color: color-mix(in oklab, var(--accent) 45%, var(--line)); }
+      .foot span { font-size: 12px; color: var(--muted); }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <header>
+        <div class="logo">L</div>
+        <div>
+          <h1>Lumen Create — Launch Progress</h1>
+          <p class="sub">From working prototype to real creators testing it, organic + paid.</p>
+        </div>
+      </header>
+
+      <div class="hero">
+        <div class="ring">
+          <svg width="148" height="148" viewBox="0 0 148 148">
+            <circle cx="74" cy="74" r="64" fill="none" stroke="var(--track)" stroke-width="14" />
+            <circle id="ringFill" cx="74" cy="74" r="64" fill="none" stroke="var(--accent)"
+              stroke-width="14" stroke-linecap="round" stroke-dasharray="402" stroke-dashoffset="402" />
+          </svg>
+          <div class="center">
+            <div class="pct" id="pct">0%</div>
+            <div class="frac" id="frac">0 / 0 steps</div>
+          </div>
+        </div>
+        <div class="hero-copy">
+          <h2 id="phaseNow">Getting started</h2>
+          <p id="phaseNowDesc">Tick a step as it ships — the ring updates itself.</p>
+          <div class="nownext" id="nowNext"></div>
+        </div>
+      </div>
+
+      <div id="phases"></div>
+
+      <div class="foot">
+        <button id="reset">Reset to saved plan</button>
+        <span>Progress is saved in this browser. Click any step to toggle it.</span>
+      </div>
+    </div>
+
+    <script>
+      // Edit `done: true/false` here as we ship real work — the ring recomputes automatically.
+      const PLAN = [
+        {
+          name: "Phase 0 · Foundation (built)",
+          desc: "The core editor already works locally.",
+          steps: [
+            { id: "p0-1", label: "AI edit pipeline: Claude tags clips, plans the cut, FFmpeg renders 9:16", done: true },
+            { id: "p0-2", label: "Burned-in captions + in-app editor (reorder, trim, rewrite, re-render)", done: true },
+            { id: "p0-3", label: "Draft save + projects list + reopen a project", done: true },
+            { id: "p0-4", label: "Dark/light mode + settings page + animated UI", done: true },
+          ],
+        },
+        {
+          name: "Phase 1 · Make it usable by strangers",
+          desc: "Sharpen the demo you'd put in front of a creator.",
+          steps: [
+            { id: "p1-1", label: "Format-template library (3–4 named recipes selectable at upload) — the differentiator", done: true },
+            { id: "p1-2", label: "Mobile-friendly upload flow + PWA 'add to home screen'", done: false },
+            { id: "p1-3", label: "Guardrails: file-size/clip limits, friendly errors, clearer progress", done: false },
+            { id: "p1-4", label: "First-run polish: clear value prop + a real example output on the landing page", done: false },
+          ],
+        },
+        {
+          name: "Phase 2 · Get it online",
+          desc: "So people who aren't at your laptop can use it.",
+          steps: [
+            { id: "p2-1", label: "Cloud storage for uploads/outputs (off the local filesystem)", done: false },
+            { id: "p2-2", label: "Deploy to a host that supports FFmpeg + long jobs (Railway/Render/Fly + worker)", done: false },
+            { id: "p2-3", label: "User accounts / auth so each creator has their own projects", done: false },
+            { id: "p2-4", label: "Cost controls: per-user caps on Claude API + storage usage", done: false },
+          ],
+        },
+        {
+          name: "Phase 3 · Validate with real creators",
+          desc: "Organic seed — learn where the edit is wrong.",
+          steps: [
+            { id: "p3-1", label: "Recruit 5–10 test creators (your network + campus creators)", done: false },
+            { id: "p3-2", label: "In-app feedback + watch real sessions", done: false },
+            { id: "p3-3", label: "Iterate edit quality on their real footage", done: false },
+          ],
+        },
+        {
+          name: "Phase 4 · Launch + marketing",
+          desc: "Organic first, then a small paid test.",
+          steps: [
+            { id: "p4-1", label: "Launch assets: demo video + before/after shorts", done: false },
+            { id: "p4-2", label: "Organic: post the tool's own outputs on TikTok/IG/YT with the build story", done: false },
+            { id: "p4-3", label: "Paid: small TikTok/Meta ad test → landing + waitlist", done: false },
+            { id: "p4-4", label: "Track the funnel (signup → activated → retained), double down on what converts", done: false },
+          ],
+        },
+      ];
+
+      const KEY = "lumen-launch-progress";
+      const C = 2 * Math.PI * 64; // ring circumference
+      const phasesEl = document.getElementById("phases");
+
+      function loadOverrides() {
+        try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch { return {}; }
+      }
+      function saveOverrides(o) { localStorage.setItem(KEY, JSON.stringify(o)); }
+
+      let overrides = loadOverrides();
+      const isDone = (s) => (s.id in overrides ? overrides[s.id] : s.done);
+
+      const check = `<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>`;
+
+      function render() {
+        phasesEl.innerHTML = "";
+        let total = 0, done = 0, firstOpenPhase = null, nextStep = null;
+
+        PLAN.forEach((phase) => {
+          const pDone = phase.steps.filter(isDone).length;
+          total += phase.steps.length;
+          done += pDone;
+          if (firstOpenPhase === null && pDone < phase.steps.length) firstOpenPhase = phase;
+
+          const wrap = document.createElement("div");
+          wrap.className = "phase";
+          wrap.innerHTML = `<div class="phase-head"><h3>${phase.name}</h3>
+            <span class="count">${pDone}/${phase.steps.length}</span></div>`;
+          const ul = document.createElement("ul");
+          phase.steps.forEach((s) => {
+            const d = isDone(s);
+            if (!d && nextStep === null) nextStep = s;
+            const li = document.createElement("li");
+            li.className = d ? "done" : "";
+            li.innerHTML = `<span class="box">${check}</span><span class="label">${s.label}</span>`;
+            li.onclick = () => { overrides[s.id] = !isDone(s); saveOverrides(overrides); render(); };
+            ul.appendChild(li);
+          });
+          wrap.appendChild(ul);
+          phasesEl.appendChild(wrap);
+        });
+
+        const pct = total ? Math.round((done / total) * 100) : 0;
+        document.getElementById("pct").textContent = pct + "%";
+        document.getElementById("frac").textContent = `${done} / ${total} steps`;
+        document.getElementById("ringFill").setAttribute("stroke-dashoffset", C * (1 - done / total));
+
+        const ph = firstOpenPhase || PLAN[PLAN.length - 1];
+        document.getElementById("phaseNow").textContent = firstOpenPhase ? "You're on: " + ph.name : "All steps complete";
+        document.getElementById("phaseNowDesc").textContent = ph.desc;
+        document.getElementById("nowNext").innerHTML = nextStep
+          ? `<b>Next up:</b> ${nextStep.label}`
+          : `<b>Done</b> — every planned step is checked off.`;
+      }
+
+      document.getElementById("reset").onclick = () => {
+        overrides = {}; saveOverrides(overrides); render();
+      };
+
+      render();
+    </script>
+  </body>
+</html>

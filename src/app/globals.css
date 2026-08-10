@@ -1,26 +1,263 @@
 @import "tailwindcss";
 
+/* Default theme — purple → pink gradient */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg:
+    radial-gradient(120% 95% at 16% 10%, #d6489a 0%, rgba(214, 72, 154, 0) 52%),
+    linear-gradient(155deg, #7b34c9 0%, #5a27a6 46%, #37206f 100%);
+  --paper: #2c1c56;
+  --paper-2: #3a2868;
+  --ink: #f7f2fb;
+  --muted: #cbb9e6;
+  --line: #4c3a86;
+  --accent: #ec4899;
+  --accent-ink: #f9a8d4;
+  --accent-soft: #46234f;
+  color-scheme: dark;
+}
+
+/* Solid black background */
+html.mode-black {
+  --bg: #0a0a0d;
+  --paper: #101014;
+  --paper-2: #17151d;
+  --ink: #f5f5f7;
+  --muted: #9a94a6;
+  --line: #262230;
+  --accent: #ec4899;
+  --accent-ink: #f9a8d4;
+  --accent-soft: #2a1626;
+  color-scheme: dark;
+}
+
+/* Solid white background */
+html.mode-white {
+  --bg: #ffffff;
+  --paper: #ffffff;
+  --paper-2: #f7f3fb;
+  --ink: #191426;
+  --muted: #6b6478;
+  --line: #ece6f4;
+  --accent: #db2777;
+  --accent-ink: #b81f66;
+  --accent-soft: #fce7f3;
+  color-scheme: light;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-paper: var(--paper);
+  --color-paper-2: var(--paper-2);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --color-accent-soft: var(--accent-soft);
+  --font-display: var(--font-poppins);
+  --font-sans: var(--font-inter-tight);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  background: var(--bg);
+  background-attachment: fixed;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), system-ui, sans-serif;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--accent);
+  color: #fff;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #ec4899 0%, #d946ef 55%, #a855f7 100%);
+  color: #fff;
+  transition:
+    filter 0.18s ease,
+    transform 0.18s ease,
+    box-shadow 0.18s ease;
+}
+.btn-primary:hover {
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+  box-shadow: 0 10px 24px -8px rgba(217, 70, 239, 0.55);
+}
+.btn-primary:active {
+  transform: translateY(0) scale(0.97);
+}
+.btn-primary:disabled {
+  filter: none;
+  transform: none;
+  box-shadow: none;
+}
+
+.btn-ghost {
+  border: 1px solid var(--line);
+  transition:
+    background-color 0.18s ease,
+    border-color 0.18s ease,
+    transform 0.18s ease;
+}
+.btn-ghost:hover {
+  background: var(--paper);
+  border-color: color-mix(in oklab, var(--accent) 45%, var(--line));
+  transform: translateY(-1px);
+}
+.btn-ghost:active {
+  transform: translateY(0) scale(0.98);
+}
+
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.reveal {
+  animation: reveal-up 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.reveal-1 {
+  animation-delay: 0.06s;
+}
+.reveal-2 {
+  animation-delay: 0.14s;
+}
+.reveal-3 {
+  animation-delay: 0.22s;
+}
+
+.lift {
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    border-color 0.18s ease;
+}
+.lift:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px -16px color-mix(in oklab, var(--accent) 55%, transparent);
+  border-color: color-mix(in oklab, var(--accent) 40%, var(--line));
+}
+
+.mark {
+  position: relative;
+  display: inline-block;
+}
+.mark::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0.08em;
+  height: 0.34em;
+  background: color-mix(in oklab, var(--accent) 32%, transparent);
+  border-radius: 2px;
+  z-index: -1;
+}
+
+/* Animated purple brand orb */
+.lumen-sphere {
+  position: relative;
+  border-radius: 9999px;
+  background: radial-gradient(
+    circle at 32% 28%,
+    #e6d4ff 0%,
+    #b892f5 20%,
+    #8b3ff0 52%,
+    #4a1d9e 100%
+  );
+  box-shadow:
+    0 0 0 1px rgba(180, 130, 245, 0.4),
+    0 8px 22px -8px rgba(139, 63, 240, 0.6),
+    inset 0 -3px 8px -3px rgba(0, 0, 0, 0.55),
+    inset 0 2px 6px -2px rgba(255, 255, 255, 0.45);
+}
+.lumen-sphere::before {
+  content: "";
+  position: absolute;
+  top: 12%;
+  left: 18%;
+  width: 38%;
+  height: 38%;
+  border-radius: 9999px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0) 68%);
+  pointer-events: none;
+}
+.lumen-sphere--live {
+  animation:
+    sphere-float 6s ease-in-out infinite,
+    sphere-glow 4.5s ease-in-out infinite;
+}
+@keyframes sphere-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5%);
+  }
+}
+@keyframes sphere-glow {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 1px rgba(180, 130, 245, 0.4),
+      0 12px 30px -10px rgba(139, 63, 240, 0.6),
+      inset 0 -3px 8px -3px rgba(0, 0, 0, 0.55),
+      inset 0 2px 6px -2px rgba(255, 255, 255, 0.45);
+  }
+  50% {
+    box-shadow:
+      0 0 0 1px rgba(214, 72, 154, 0.6),
+      0 18px 52px -8px rgba(217, 70, 239, 0.7),
+      inset 0 -3px 8px -3px rgba(0, 0, 0, 0.55),
+      inset 0 2px 6px -2px rgba(255, 255, 255, 0.45);
+  }
+}
+.sphere-burst {
+  animation: sphere-burst 0.8s cubic-bezier(0.7, 0, 0.84, 0) forwards !important;
+}
+@keyframes sphere-burst {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    transform: scale(42);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-delay: 0 !important;
+    transition-duration: 0.001ms !important;
+  }
+  .btn-primary:hover,
+  .btn-ghost:hover,
+  .lift:hover {
+    transform: none;
+  }
+  .lumen-sphere--live {
+    animation: none !important;
+  }
 }

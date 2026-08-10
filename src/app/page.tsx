@@ -1,69 +1,143 @@
-import Image from "next/image";
+import LumenSphere from "@/components/LumenSphere";
+import ThemeToggle from "@/components/ThemeToggle";
+
+const steps = [
+  {
+    n: "01",
+    title: "Drop the day's clips",
+    body: "Walks between buildings, a pan over the quad, the coffee run, a quick chat. Raw and unsorted is fine.",
+  },
+  {
+    n: "02",
+    title: "Say what you want",
+    body: "\u201CTight 40-second morning recap, upbeat.\u201D It picks the good moments, trims the dead air, and cuts to the beat.",
+  },
+  {
+    n: "03",
+    title: "Download and post",
+    body: "A polished 9:16 short with music \u2014 or a casual voiceover written from what's actually in your clips. You post it.",
+  },
+];
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
+    <>
+      <header className="border-b border-line">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-5 sm:px-8">
+          <a href="/" className="flex items-center gap-2.5">
+            <LumenSphere className="h-7 w-7 shrink-0" />
+            <span className="font-display text-lg font-semibold tracking-tight">
+              Lumen Create
+            </span>
           </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+          <div className="flex items-center gap-4 text-sm">
+            <a href="/projects" className="text-muted hover:text-ink">
+              Projects
+            </a>
+            <a href="/settings" className="text-muted hover:text-ink">
+              Settings
+            </a>
+            <ThemeToggle />
+          </div>
         </div>
+      </header>
+
+      <main className="flex-1">
+        <section className="mx-auto max-w-6xl px-5 pt-16 pb-20 sm:px-8 sm:pt-24">
+          <div className="grid items-center gap-12 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16">
+            <div>
+              <h1 className="reveal font-display text-[2.75rem] leading-[1.02] font-semibold tracking-tight text-balance sm:text-6xl">
+                You film the day.
+                <br />
+                It hands back the <span className="mark">edit.</span>
+              </h1>
+              <p className="reveal reveal-2 mt-6 max-w-xl text-lg text-muted">
+                For creators who love shooting and dread the timeline. Drop in
+                the raw clips, tell it the vibe, and get a paced, ready-to-post
+                vertical short back &mdash; with music or an AI voiceover in a
+                casual, first-person voice.
+              </p>
+              <div className="reveal reveal-3 mt-9 flex flex-wrap items-center gap-4">
+                <a
+                  href="/create"
+                  className="btn-primary rounded-lg px-5 py-3 font-medium text-white"
+                >
+                  Start a project
+                </a>
+                <span className="text-sm text-muted">
+                  AI-edited 9:16 short from your raw clips.
+                </span>
+              </div>
+            </div>
+
+            <div aria-hidden className="relative">
+              <div className="rounded-2xl border border-line bg-paper-2 p-6">
+                <div className="space-y-2.5">
+                  {["8:12 — walk to class", "9:40 — coffee run", "1:15 — quad pan"].map(
+                    (clip) => (
+                      <div
+                        key={clip}
+                        className="flex items-center gap-3 rounded-lg border border-line bg-paper px-3 py-2.5"
+                      >
+                        <span className="h-8 w-12 shrink-0 rounded bg-ink/10" />
+                        <span className="truncate text-sm text-muted">
+                          {clip}
+                        </span>
+                      </div>
+                    ),
+                  )}
+                </div>
+                <div className="my-5 flex items-center justify-center gap-2 text-xs font-medium tracking-wide text-accent-ink uppercase">
+                  <span className="h-px w-8 bg-line" />
+                  edits to
+                  <span className="h-px w-8 bg-line" />
+                </div>
+                <div className="mx-auto aspect-[9/16] w-32 rounded-xl border border-accent/30 bg-accent-soft p-2">
+                  <div className="flex h-full flex-col justify-end rounded-lg bg-accent/10 p-2">
+                    <div className="h-1.5 w-3/4 rounded-full bg-accent/60" />
+                    <div className="mt-1 h-1.5 w-1/2 rounded-full bg-accent/40" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="border-t border-line bg-paper-2">
+          <div className="mx-auto max-w-6xl px-5 py-16 sm:px-8">
+            <h2 className="font-display text-2xl font-semibold tracking-tight">
+              How a shoot becomes a short
+            </h2>
+            <ol className="mt-10 grid gap-8 sm:grid-cols-3 sm:gap-6">
+              {steps.map((step) => (
+                <li
+                  key={step.n}
+                  className="lift rounded-xl border border-line bg-paper p-5"
+                >
+                  <span className="font-display text-sm font-semibold text-accent">
+                    {step.n}
+                  </span>
+                  <h3 className="mt-2 font-display text-lg font-semibold tracking-tight">
+                    {step.title}
+                  </h3>
+                  <p className="mt-2 text-muted">{step.body}</p>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </section>
       </main>
-    </div>
+
+      <footer className="border-t border-line">
+        <div className="mx-auto flex max-w-6xl flex-col gap-1 px-5 py-8 sm:px-8">
+          <span className="font-display text-sm font-semibold tracking-tight">
+            Lumen Create
+          </span>
+          <span className="text-sm text-muted">
+            Working name &mdash; early build.
+          </span>
+        </div>
+      </footer>
+    </>
   );
 }

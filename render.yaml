@@ -1,0 +1,16 @@
+# Render blueprint. Railway users can ignore this — Railway auto-detects the
+# Dockerfile. Persist .data so rendered projects survive deploys/restarts.
+services:
+  - type: web
+    name: lumen-create
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    plan: starter
+    healthCheckPath: /
+    envVars:
+      - key: ANTHROPIC_API_KEY
+        sync: false
+    disk:
+      name: lumen-data
+      mountPath: /app/.data
+      sizeGB: 10
