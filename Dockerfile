@@ -13,10 +13,9 @@ RUN npm ci
 COPY . .
 RUN npm run build
 
-# Job files live here at runtime. Mount a persistent volume at this path on the
-# host platform, otherwise projects are lost when the container restarts.
+# Job files live here at runtime. Attach a persistent volume at /app/.data on
+# the host platform (e.g. Railway Volumes), or projects are lost on restart.
 RUN mkdir -p .data/jobs
-VOLUME ["/app/.data"]
 
 ENV NODE_ENV=production
 ENV PORT=3000
