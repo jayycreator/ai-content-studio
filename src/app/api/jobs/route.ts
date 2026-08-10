@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { after, NextResponse } from "next/server";
 import { createJob, listJobs, processJob } from "@/lib/jobs";
 import { FREE_FORMATS_LABEL, isAcceptedFile } from "@/lib/plans";
 import { getRecipe } from "@/lib/recipes";
@@ -44,8 +44,9 @@ export async function POST(request: Request) {
   const recipeId = getRecipe(String(form.get("recipeId") ?? "")).id;
   const job = await createJob(files, instruction, recipeId);
 
-  // Fire-and-forget: processing continues after the response returns.
-  void processJob(job.id);
+  // Run the render after the response is sent. `after()` keeps the work alive
+  // in production, where a bare fire-and-forget promise can be dropped.
+  after(() => processJob(job.id));
 
   return NextResponse.json({ id: job.id, status: job.status }, { status: 201 });
 }
