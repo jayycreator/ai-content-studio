@@ -252,6 +252,11 @@ export async function renderPlan(
     "[outv]",
     "-c:v",
     "libx264",
+    // Cap encoder threads: libx264 otherwise spawns one per host core (60+ on
+    // Railway), and each thread's buffers blow a small container's RAM (OOM at
+    // frame 0). Two threads keeps memory bounded.
+    "-threads",
+    "2",
     "-pix_fmt",
     "yuv420p",
     "-preset",
@@ -298,6 +303,11 @@ export async function normalizeAndConcat(
     "[outv]",
     "-c:v",
     "libx264",
+    // Cap encoder threads: libx264 otherwise spawns one per host core (60+ on
+    // Railway), and each thread's buffers blow a small container's RAM (OOM at
+    // frame 0). Two threads keeps memory bounded.
+    "-threads",
+    "2",
     "-pix_fmt",
     "yuv420p",
     "-preset",
